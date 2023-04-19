@@ -1,0 +1,88 @@
+@import '../../sass/mixins';
+@import '../../sass/variables';
+
+.Loading {
+    height: 100vh;
+    width: 100vw;
+    padding-left: 4vw;
+    padding-top: 15vh;
+
+    @include mq('sm'){
+        padding-top: 10vh;
+    }
+
+    @include mq('sm'){
+        padding-top: 12vh;
+    }
+
+    &__title {
+        width: 17%;
+        height: 2vh;
+        margin-bottom: 2vh;
+        border-radius: 10px;
+        background-color: #2c2c2c;
+        animation: load 1s linear infinite;
+
+        @include mq('sm'){
+            width: 13%;
+            height: 5vh;
+        }
+
+        @include mq('md'){
+            width: 15%;
+            height: 3vh;
+        }
+
+        @include mq('lg'){
+            width: 13%;
+            height: 5vh;
+        }
+    }
+
+    &__carousel {
+        display: inline-flex;
+        flex-wrap: wrap;
+
+        &--poster{
+            width: 11vh;
+            height: 14vw;
+            margin-right: 0.3rem;
+            margin-bottom: 2em;
+            border-radius: 10px;
+            animation: load 1.5s ease infinite;
+            overflow: hidden;
+
+            @include mq('sm'){
+                width: 14vw;
+                height: 17vh;
+                margin-right: 0.7rem;
+            }
+
+            @include mq('md'){
+                width: 15vh;
+                height: 15vw;
+                margin-bottom: 3.5em;
+                margin-right: 0.6rem;
+            }
+
+            @include mq('lg'){
+                width: 14vw;
+                height: 17vh;
+                margin-bottom: 4.5em;
+                margin-right: 0.7rem;
+            }
+        }
+    }
+}
+
+@keyframes load {
+    0% {
+        background-color: #222222;
+    }
+    50% {
+        background-color: #2e2e2e;
+    }
+    100% {
+        background-color: #222222;
+    }
+}
