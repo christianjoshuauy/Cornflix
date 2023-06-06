@@ -2,6 +2,10 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## TODO
+
+Fix lag, Improve authentication system, Implement My List
+
 ## Available Scripts
 
 In the project directory, you can run:
