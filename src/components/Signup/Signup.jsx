@@ -2,14 +2,18 @@ import React from "react";
 import Input from "../Input/Input";
 import { useForm } from "react-hook-form";
 import "./Signup.scss";
+import { useDispatch } from "react-redux";
+import { signUp } from "../../redux/slices/authSlice";
 
 function Signup() {
+  const dispatch = useDispatch();
   const { register, handleSubmit, errors, getValues } = useForm({
     mode: "onTouched",
   });
 
   const onSubmit = (data) => {
     const { displayName, email, password } = data;
+    dispatch(signUp({ email, password }));
   };
   return (
     <form className="Signup__form" onSubmit={handleSubmit(onSubmit)}>
@@ -19,7 +23,7 @@ function Signup() {
           name="displayName"
           placeholder="Your name"
           validationMessage="Please enter your name."
-          {...register("displayName", {
+          validation={register("displayName", {
             required: true,
             minLength: 2,
             maxLength: 60,
@@ -33,7 +37,7 @@ function Signup() {
           name="email"
           placeholder="E-mail"
           validationMessage="Please enter a valid email address."
-          {...register("email", {
+          validation={register("email", {
             required: true,
             pattern:
               /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
@@ -47,7 +51,7 @@ function Signup() {
           name="password"
           placeholder="Password"
           validationMessage="The password should have a length between 6 and 30 characters."
-          {...register("password", {
+          validation={register("password", {
             required: true,
             minLength: 6,
             maxLength: 30,
@@ -61,7 +65,7 @@ function Signup() {
           name="check_password"
           placeholder="Repeat your password"
           validationMessage="Passwords should match"
-          {...register("check_password", {
+          validation={register("check_password", {
             validate: {
               matchesPreviousPassword: (value) => {
                 const { password } = getValues();

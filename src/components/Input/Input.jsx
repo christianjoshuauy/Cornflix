@@ -20,7 +20,7 @@ function Input({
                     ${errors?.[name] && "error"}
                     ${additionalClass && additionalClass}
                 `}
-        ref={validation}
+        {...validation}
       />
       {errors?.[name] && <p className="Input__label">{validationMessage}</p>}
     </React.Fragment>
