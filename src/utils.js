@@ -21,12 +21,10 @@ export async function genreTopVideos(genres, type) {
     let newUrl = url;
     newUrl += genre.id.toString();
     genreRequestArray.push(
-      axios
-        .get(newUrl)
-        .then((response) => ({
-          title: genre.name,
-          videos: response.data.results,
-        }))
+      axios.get(newUrl).then((response) => ({
+        title: genre.name,
+        videos: response.data.results,
+      }))
     );
   });
 
