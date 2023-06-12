@@ -34,35 +34,3 @@ export async function genreTopVideos(genres, type) {
     throw new Error(error);
   }
 }
-
-export const setCookie = (name, value, days) => {
-  const expirationDate = new Date();
-  expirationDate.setDate(expirationDate.getDate() + days);
-
-  const cookieValue = `${encodeURIComponent(name)}=${encodeURIComponent(
-    value
-  )}; expires=${expirationDate.toUTCString()}; path=/`;
-  document.cookie = cookieValue;
-};
-
-export const getCookie = (name) => {
-  const encodedName = encodeURIComponent(name);
-  const cookies = document.cookie.split(";");
-
-  for (let i = 0; i < cookies.length; i++) {
-    const cookie = cookies[i].trim();
-
-    if (cookie.startsWith(encodedName + "=")) {
-      return decodeURIComponent(cookie.substring(encodedName.length + 1));
-    }
-  }
-
-  return null;
-};
-
-export const removeCookie = (name) => {
-  const cookieValue = `${encodeURIComponent(
-    name
-  )}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-  document.cookie = cookieValue;
-};

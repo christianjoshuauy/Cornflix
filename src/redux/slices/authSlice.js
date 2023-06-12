@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { auth } from "../../firebase/firebase";
+import { auth, createUser } from "../../firebase/firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { removeCookie, setCookie } from "../../utils";
+import { getDoc } from "firebase/firestore";
 
 const initialState = {
   user: null,
@@ -17,7 +17,7 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setUserFromCookie(state, action) {
+    setUser(state, action) {
       state.user = action.payload;
     },
     clearUser(state) {
@@ -31,11 +31,11 @@ const authSlice = createSlice({
     builder.addCase(signUp.fulfilled, (state, action) => {
       state.isLoading = false;
       state.user = action.payload;
-      setCookie("user", action.payload.uid, 1);
     });
     builder.addCase(signUp.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
+      console.log(action);
     });
     builder.addCase(signIn.pending, (state, _) => {
       state.isLoading = true;
@@ -43,11 +43,11 @@ const authSlice = createSlice({
     builder.addCase(signIn.fulfilled, (state, action) => {
       state.isLoading = false;
       state.user = action.payload;
-      setCookie("user", action.payload.uid, 1);
     });
     builder.addCase(signIn.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
+      console.log(action);
     });
     builder.addCase(signout.pending, (state, _) => {
       state.isLoading = true;
@@ -55,7 +55,6 @@ const authSlice = createSlice({
     builder.addCase(signout.fulfilled, (state, _) => {
       state.isLoading = false;
       state.user = null;
-      removeCookie("user");
     });
     builder.addCase(signout.rejected, (state, action) => {
       state.isLoading = false;
@@ -74,20 +73,36 @@ export const signIn = createAsyncThunk(
     );
     const user = userCredential.user;
 
-    return user;
+    const userRef = await createUser(user);
+    const userSnapshot = await getDoc(userRef);
+
+    const sessionUser = {
+      id: userSnapshot.id,
+      ...userSnapshot.data(),
+    };
+
+    return sessionUser;
   }
 );
 
 export const signUp = createAsyncThunk(
   "auth/signUp",
-  async ({ email, password }) => {
+  async ({ displayName, email, password }) => {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
       password
     );
     const user = userCredential.user;
-    return user;
+    const userRef = await createUser(user, { displayName });
+    const userSnapshot = await getDoc(userRef);
+
+    const sessionUser = {
+      id: userSnapshot.id,
+      ...userSnapshot.data(),
+    };
+
+    return sessionUser;
   }
 );
 
@@ -97,6 +112,6 @@ export const signout = createAsyncThunk("auth/signout", async () => {
 
 export const selectUser = (state) => state.auth.user;
 
-export const { setUserFromCookie, clearUser } = authSlice.actions;
+export const { setUser, clearUser } = authSlice.actions;
 
 export default authSlice.reducer;

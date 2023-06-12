@@ -13,7 +13,7 @@ function Signup() {
 
   const onSubmit = (data) => {
     const { displayName, email, password } = data;
-    dispatch(signUp({ email, password }));
+    dispatch(signUp({ displayName, email, password }));
   };
   return (
     <form className="Signup__form" onSubmit={handleSubmit(onSubmit)}>

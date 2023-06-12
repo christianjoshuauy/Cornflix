@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## TODO
 
-Fix lag, Improve authentication system, Implement My List
+Fix lag, Implement My List
 
 ## Available Scripts
 

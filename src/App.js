@@ -10,8 +10,9 @@ import {
 import Loading from "./components/Loading/Loading";
 import NavBar from "./components/NavBar/NavBar";
 import Auth from "./pages/Auth/Auth";
-import { selectUser, setUserFromCookie } from "./redux/slices/authSlice";
-import { getCookie } from "./utils";
+import { selectUser, setUser } from "./redux/slices/authSlice";
+import { createUser, getCurrentUser } from "./firebase/firebase";
+import { getDoc } from "firebase/firestore";
 const Home = React.lazy(() => import("./pages/Home/Home"));
 const Movies = React.lazy(() => import("./pages/Movies/Movies"));
 const MyList = React.lazy(() => import("./pages/MyList/MyList"));
@@ -27,11 +28,18 @@ function App() {
   const showNavBar = location.pathname !== "/";
 
   useEffect(() => {
-    const userCookie = getCookie("user");
-    if (userCookie && !user) {
-      dispatch(setUserFromCookie(userCookie));
-    }
-  }, [dispatch, user]);
+    getCurrentUser().then((user) => {
+      if (!user) {
+        dispatch(setUser(null));
+      }
+      createUser(user).then((user) => {
+        if (!user) return;
+        getDoc(user).then((snap) => {
+          dispatch(setUser(snap.data()));
+        });
+      });
+    });
+  }, [user, dispatch]);
 
   useEffect(() => {
     if (!user && location.pathname !== "/") {
