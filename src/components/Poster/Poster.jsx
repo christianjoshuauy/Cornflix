@@ -5,8 +5,11 @@ import { BASE_IMG_URL } from "../../constants";
 import FallbackImg from "../../imgs/Fallback_img.png";
 import useGenreConversion from "../../hooks/useGenreConversion";
 import { useMemo } from "react";
+import { useDispatch } from "react-redux";
+import { addToFavorites } from "../../redux/slices/favoritesSlices";
+import { removeFavorite } from "../../firebase/firebase";
 
-export default function Poster({ movie, isLarge }) {
+export default function Poster({ movie, isLarge, isFavorite = false }) {
   const {
     backdrop_path,
     genre_ids,
@@ -28,6 +31,16 @@ export default function Poster({ movie, isLarge }) {
     () => `${BASE_IMG_URL}/${backdrop_path}`,
     [backdrop_path]
   );
+  const dispatch = useDispatch();
+
+  const addFavClickHandler = () => {
+    dispatch(addToFavorites(movie));
+  };
+
+  const removeFavClickHandler = () => {
+    dispatch(removeFavorite(movie));
+  };
+
   return (
     <div className={`Poster ${isLarge && "Poster--big"}`}>
       {isLarge ? (
@@ -51,12 +64,18 @@ export default function Poster({ movie, isLarge }) {
           <a className="Poster-info--icon icon--play">
             <FaPlay />
           </a>
-          {true ? (
-            <button className="Poster-info--icon icon--favourite">
+          {!isFavorite ? (
+            <button
+              className="Poster-info--icon icon--favourite"
+              onClick={() => addFavClickHandler()}
+            >
               <FaPlus />
             </button>
           ) : (
-            <button className="Poster-info--icon icon--favourite">
+            <button
+              className="Poster-info--icon icon--favourite"
+              onClick={() => removeFavClickHandler()}
+            >
               <FaMinus />
             </button>
           )}

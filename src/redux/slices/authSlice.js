@@ -78,6 +78,7 @@ export const signIn = createAsyncThunk(
 
     const sessionUser = {
       id: userSnapshot.id,
+      uid: userSnapshot.id,
       ...userSnapshot.data(),
     };
 

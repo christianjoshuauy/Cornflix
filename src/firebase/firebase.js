@@ -2,7 +2,15 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc, setDoc, getFirestore } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  setDoc,
+  getFirestore,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+} from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -31,10 +39,12 @@ export const createUser = async (userAuth, additionalData) => {
   const snapShot = await getDoc(userRef);
 
   if (!snapShot.exists()) {
-    const { displayName, email } = userAuth;
+    const { displayName, email, uid } = userAuth;
+    console.log(userAuth);
     const createdAt = new Date();
     try {
       await setDoc(userRef, {
+        uid,
         displayName,
         email,
         createdAt,
@@ -61,6 +71,20 @@ export const getCurrentUser = () => {
         reject(error);
       }
     );
+  });
+};
+
+export const addFavorite = async (userId, movie) => {
+  const userRef = doc(firestore, `users/${userId}`);
+  await updateDoc(userRef, {
+    favorites: arrayUnion(movie),
+  });
+};
+
+export const removeFavorite = async (userId, movieId) => {
+  const userRef = doc(firestore, `users/${userId}`);
+  await updateDoc(userRef, {
+    favorites: arrayRemove({ id: movieId }),
   });
 };
 

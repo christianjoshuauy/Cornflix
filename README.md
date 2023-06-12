@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## TODO
 
-Fix lag, Implement My List
+Fix lag, Fix poster hover bug
 
 ## Available Scripts
 
