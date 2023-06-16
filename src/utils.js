@@ -34,3 +34,13 @@ export async function genreTopVideos(genres, type) {
     throw new Error(error);
   }
 }
+
+export function dateToYear(dateString) {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  return year;
+}
+
+export function capitalize(str) {
+  return str ? str.charAt(0).toUpperCase() + str.slice(1) : str;
+}

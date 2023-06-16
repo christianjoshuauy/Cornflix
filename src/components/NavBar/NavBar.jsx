@@ -69,8 +69,8 @@ export default function NavBar() {
             </NavLink>
           </li>
           <li className="Navbar__navlinks--link">
-            <NavLink to="/my-list" activeClassName="activeNavLink">
-              My List
+            <NavLink to="/favorites" activeClassName="activeNavLink">
+              My Favorites
             </NavLink>
           </li>
         </ul>
@@ -114,7 +114,7 @@ export default function NavBar() {
                   </NavLink>
                 </li>
                 <li className="Navbar__navlinks--link">
-                  <NavLink to="/my-list" activeClassName="activeNavLink">
+                  <NavLink to="/favorites" activeClassName="activeNavLink">
                     My Favorites
                   </NavLink>
                 </li>

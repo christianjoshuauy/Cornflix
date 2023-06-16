@@ -13,15 +13,18 @@ import Auth from "./pages/Auth/Auth";
 import { selectUser, setUser } from "./redux/slices/authSlice";
 import { createUser, getCurrentUser } from "./firebase/firebase";
 import { getDoc } from "firebase/firestore";
+import Modal from "./components/Modal/Modal";
+import { selectIsOpen } from "./redux/slices/modalSlice";
 const Home = React.lazy(() => import("./pages/Home/Home"));
 const Movies = React.lazy(() => import("./pages/Movies/Movies"));
-const MyList = React.lazy(() => import("./pages/Favorites/Favorites"));
+const Favorites = React.lazy(() => import("./pages/Favorites/Favorites"));
 const Popular = React.lazy(() => import("./pages/Popular/Popular"));
 const Series = React.lazy(() => import("./pages/Series/Series"));
 const Search = React.lazy(() => import("./pages/Search/Search"));
 
 function App() {
   const dispatch = useDispatch();
+  const isOpen = useSelector(selectIsOpen);
   const user = useSelector(selectUser);
   const navigate = useNavigate();
   const location = useLocation();
@@ -50,6 +53,7 @@ function App() {
   return (
     <div className="App">
       {showNavBar && <NavBar />}
+      {isOpen && <Modal />}
       <Suspense fallback={<Loading />}>
         <Routes>
           <Route
@@ -79,8 +83,8 @@ function App() {
           />
           <Route
             exact
-            path="/my-list"
-            element={user ? <MyList /> : <Navigate to="/" />}
+            path="/favorites"
+            element={user ? <Favorites /> : <Navigate to="/" />}
           />
           <Route
             exact

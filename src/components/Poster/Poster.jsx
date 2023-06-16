@@ -1,5 +1,5 @@
 import "./Poster.scss";
-import React from "react";
+import React, { useState } from "react";
 import { FaPlus, FaMinus, FaPlay, FaChevronDown } from "react-icons/fa";
 import { BASE_IMG_URL } from "../../constants";
 import FallbackImg from "../../imgs/Fallback_img.png";
@@ -10,19 +10,11 @@ import {
   addToFavorites,
   removeFromFavorites,
 } from "../../redux/slices/favoritesSlices";
+import { openModal } from "../../redux/slices/modalSlice";
 
 export default function Poster({ movie, isLarge, isFavorite = false }) {
-  const {
-    backdrop_path,
-    genre_ids,
-    original_title,
-    overview,
-    poster_path,
-    release_date,
-    title,
-    name,
-    vote_average,
-  } = movie;
+  const { backdrop_path, genre_ids, original_title, poster_path, title, name } =
+    movie;
   const movieTitle = original_title || title || name;
   const genres = useGenreConversion(genre_ids);
   const posterImage = useMemo(
@@ -34,7 +26,7 @@ export default function Poster({ movie, isLarge, isFavorite = false }) {
     [backdrop_path]
   );
   const dispatch = useDispatch();
-  const [isFav, setIsFav] = React.useState(isFavorite);
+  const [isFav, setIsFav] = useState(isFavorite);
 
   const addFavClickHandler = () => {
     setIsFav(true);
@@ -45,6 +37,10 @@ export default function Poster({ movie, isLarge, isFavorite = false }) {
     setIsFav(false);
     dispatch(removeFromFavorites(movie));
   };
+
+  function handleInfoClick(mov, fav) {
+    dispatch(openModal({ movie: mov, isFavorite: fav }));
+  }
 
   return (
     <div className={`Poster ${isLarge && "Poster--big"}`}>
@@ -66,9 +62,9 @@ export default function Poster({ movie, isLarge, isFavorite = false }) {
       )}
       <div className="Poster-info">
         <div className="Poster-info--iconswrp">
-          <a className="Poster-info--icon icon--play">
+          <span className="Poster-info--icon icon--play">
             <FaPlay />
-          </a>
+          </span>
           {!isFav ? (
             <button
               className="Poster-info--icon icon--favourite"
@@ -84,7 +80,10 @@ export default function Poster({ movie, isLarge, isFavorite = false }) {
               <FaMinus />
             </button>
           )}
-          <button className="Poster-info--icon icon--toggleModal">
+          <button
+            className="Poster-info--icon icon--toggleModal"
+            onClick={() => handleInfoClick(movie, isFav)}
+          >
             <FaChevronDown />
           </button>
         </div>

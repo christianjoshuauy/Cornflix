@@ -7,6 +7,7 @@ import trendingReducer from "./slices/trendingSlice";
 import tvShowReducer from "./slices/tvShowSlice";
 import searchReducer from "./slices/searchSlice";
 import authSlice from "./slices/authSlice";
+import modalSlice from "./slices/modalSlice";
 
 const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ const store = configureStore({
     tvShow: tvShowReducer,
     search: searchReducer,
     auth: authSlice,
+    modal: modalSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

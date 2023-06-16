@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## TODO
 
-Fix lag, Add movie information card
+Fix lag
 
 ## Available Scripts
 

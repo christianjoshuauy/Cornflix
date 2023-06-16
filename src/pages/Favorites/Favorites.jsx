@@ -13,7 +13,12 @@ export default function Favorites() {
       <div className="Favorites__wrap">
         {favorites && favorites.length > 0 ? (
           favorites.map((favorite) => (
-            <Poster movie={favorite} isLarge={false} isFavorite={true} />
+            <Poster
+              movie={favorite}
+              isLarge={false}
+              isFavorite={true}
+              key={favorite.id}
+            />
           ))
         ) : (
           <h2 className="Favorites__title">
