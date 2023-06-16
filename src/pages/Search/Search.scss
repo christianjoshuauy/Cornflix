@@ -1,4 +1,5 @@
 @import "../../sass/mixins";
+@import "../../sass/variables";
 
 .Search {
 	padding: 2em 4vw 0 4vw;
@@ -54,6 +55,140 @@
 			border-radius: 5px;
 			pointer-events: none;
 			transition: all 0.4s ease 0.15s;
+
+			@include mq('md') {
+				pointer-events: all;
+			}
+	
+			&--iconswrp {
+				display: flex;
+				align-items: center;
+				justify-content: flex-start;
+			}
+	
+			&--icon {
+				display: inline-flex;
+				padding: 6px;
+				border-radius: 50%;
+				font-size: 12px;
+				cursor: pointer;
+				margin: 0 5px;
+				margin-bottom: 0.6em;
+				background: transparent;
+				color: $white;
+				border: 1px solid $white;
+				transition: all 0.3s ease-out;
+				outline: none;
+	
+				@include mq('lg') {
+					font-size: 14px;
+					padding: 8px;
+					margin-bottom: 0.8em;
+				}
+	
+				@include mq(1378px, 1680px) {
+					font-size: 12px;
+					padding: 6px;
+					margin-bottom: 0.6em;
+				}
+	
+				@include mq(1680px) {
+					font-size: 14px;
+					padding: 8px;
+					margin-bottom: 0.8em;
+				}
+	
+				&:hover {
+					background: $white;
+					color: $black;
+				}
+	
+				&:first-child {
+					margin-left: 0;
+					background: $white;
+					color: $black;
+	
+					&:hover {
+						background: rgba($white, 0.7);
+						border-color: rgba($white, 0.7);
+					}
+				}
+			}
+	
+			&--title {
+				h3 {
+					font-size: 12px;
+					font-weight: 600;
+					text-transform: none;
+	
+					@include mq('lg') {
+						font-size: 15px;
+					}
+	
+					@include mq(1378px, 1680px) {
+						font-size: 12px;
+					}
+	
+					@include mq(1680px) {
+						font-size: 15px;
+					}
+				}
+	
+				p {
+					font-size: 10px;
+					margin-top: 0.3vw;
+					margin-bottom: 0;
+	
+					@include mq('lg') {
+						font-size: 13px;
+					}
+	
+					@include mq(1378px, 1680px) {
+						font-size: 10px;
+					}
+	
+					@include mq(1680px) {
+						font-size: 13px;
+					}
+				}
+			}
+	
+			&--genres {
+				display: block;
+				width: 100%;
+	
+				.genre-title {
+					display: inline-block;
+					width: auto;
+					font-size: 8px;
+					margin: 0 0.3vw 0 0;
+	
+					@include mq('lg') {
+						font-size: 10px;
+					}
+	
+					@include mq(1378px, 1680px) {
+						font-size: 8px;
+					}
+	
+					@include mq(1680px) {
+						font-size: 10px;
+					}
+	
+					&:after {
+						content: "●";
+						display: inline-block;
+						margin: 0 0 0 0.3vw;
+						font-size: 6px;
+						text-shadow: 0 1px 1px rgba(0, 0, 0, 0);
+						color: rgba($white, 0.4);
+					}
+	
+					&:last-child:after {
+						display: none;
+					}
+				}
+			}
 		}
 	
 		&:hover{
