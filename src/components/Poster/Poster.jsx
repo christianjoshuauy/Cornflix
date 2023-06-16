@@ -6,8 +6,10 @@ import FallbackImg from "../../imgs/Fallback_img.png";
 import useGenreConversion from "../../hooks/useGenreConversion";
 import { useMemo } from "react";
 import { useDispatch } from "react-redux";
-import { addToFavorites } from "../../redux/slices/favoritesSlices";
-import { removeFavorite } from "../../firebase/firebase";
+import {
+  addToFavorites,
+  removeFromFavorites,
+} from "../../redux/slices/favoritesSlices";
 
 export default function Poster({ movie, isLarge, isFavorite = false }) {
   const {
@@ -32,13 +34,16 @@ export default function Poster({ movie, isLarge, isFavorite = false }) {
     [backdrop_path]
   );
   const dispatch = useDispatch();
+  const [isFav, setIsFav] = React.useState(isFavorite);
 
   const addFavClickHandler = () => {
+    setIsFav(true);
     dispatch(addToFavorites(movie));
   };
 
   const removeFavClickHandler = () => {
-    dispatch(removeFavorite(movie));
+    setIsFav(false);
+    dispatch(removeFromFavorites(movie));
   };
 
   return (
@@ -64,7 +69,7 @@ export default function Poster({ movie, isLarge, isFavorite = false }) {
           <a className="Poster-info--icon icon--play">
             <FaPlay />
           </a>
-          {!isFavorite ? (
+          {!isFav ? (
             <button
               className="Poster-info--icon icon--favourite"
               onClick={() => addFavClickHandler()}

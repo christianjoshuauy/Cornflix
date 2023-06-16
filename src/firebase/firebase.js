@@ -81,10 +81,10 @@ export const addFavorite = async (userId, movie) => {
   });
 };
 
-export const removeFavorite = async (userId, movieId) => {
+export const removeFavorite = async (userId, movie) => {
   const userRef = doc(firestore, `users/${userId}`);
   await updateDoc(userRef, {
-    favorites: arrayRemove({ id: movieId }),
+    favorites: arrayRemove(movie),
   });
 };
 

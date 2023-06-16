@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## TODO
 
-Fix lag, Fix poster hover bug
+Fix lag, Add movie information card
 
 ## Available Scripts
 

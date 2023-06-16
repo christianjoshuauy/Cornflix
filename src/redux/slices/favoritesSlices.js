@@ -33,7 +33,7 @@ export const removeFromFavorites = createAsyncThunk(
   "favorites/remove",
   async (movie, { getState }) => {
     const { user } = getState().auth;
-    await removeFavorite(user.uid, movie.id);
+    await removeFavorite(user.uid, movie);
 
     return movie;
   }

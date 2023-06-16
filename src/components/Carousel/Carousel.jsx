@@ -9,12 +9,16 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/scss";
 import "swiper/scss/navigation";
 import "swiper/scss/pagination";
+import { useSelector } from "react-redux";
+import { selectFavorites } from "../../redux/slices/favoritesSlices";
 SwiperCore.use([Navigation, Pagination]);
 
 export default function Carousel(props) {
   const { title, movies } = props ? props : {};
   const { width } = useViewport();
   const isNetflixOriginal = title === "Cornflix Originals" ? true : false;
+
+  const favorites = useSelector(selectFavorites);
 
   const navigationPrevRef = useRef(null);
   const navigationNextRef = useRef(null);
@@ -86,6 +90,10 @@ export default function Carousel(props) {
     }
   }
 
+  function isFavorite(movie) {
+    return favorites.some((favorite) => favorite.id === movie.id);
+  }
+
   return (
     <div className="Carousel">
       <h3 className="Carousel__title">
@@ -124,7 +132,11 @@ export default function Carousel(props) {
                 onMouseOver={rightMouseOver}
                 onMouseOut={rightMouseOut}
               >
-                <Poster movie={movie} isLarge={isNetflixOriginal} />
+                <Poster
+                  movie={movie}
+                  isLarge={isNetflixOriginal}
+                  isFavorite={isFavorite(movie)}
+                />
               </SwiperSlide>
             ))}
         </Swiper>

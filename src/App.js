@@ -15,7 +15,7 @@ import { createUser, getCurrentUser } from "./firebase/firebase";
 import { getDoc } from "firebase/firestore";
 const Home = React.lazy(() => import("./pages/Home/Home"));
 const Movies = React.lazy(() => import("./pages/Movies/Movies"));
-const MyList = React.lazy(() => import("./pages/MyList/MyList"));
+const MyList = React.lazy(() => import("./pages/Favorites/Favorites"));
 const Popular = React.lazy(() => import("./pages/Popular/Popular"));
 const Series = React.lazy(() => import("./pages/Series/Series"));
 const Search = React.lazy(() => import("./pages/Search/Search"));
