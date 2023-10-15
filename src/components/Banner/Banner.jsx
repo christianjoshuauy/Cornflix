@@ -22,7 +22,8 @@ export default function Banner(props) {
   );
 
   function isFavorite(movie) {
-    return favorites.some((favorite) => favorite.id === movie.id);
+    if (favorites)
+      return favorites.some((favorite) => favorite.id === movie.id);
   }
 
   function handleInfoClick(mov, fav) {
