@@ -91,7 +91,8 @@ export default function Carousel(props) {
   }
 
   function isFavorite(movie) {
-    if (movie) return favorites.some((favorite) => favorite.id === movie.id);
+    if (favorites)
+      return favorites.some((favorite) => favorite.id === movie.id);
   }
 
   return (
